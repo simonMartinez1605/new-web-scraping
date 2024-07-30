@@ -43,40 +43,40 @@ const scraping = async (item, res) => {
     );
 
     // Falabella
-    await page.goto(`https://www.exito.com/s?q=${item}`); 
-    const exito_products = await page.$$eval(
-        '.product-card-no-alimentos_fsProductCardNoAlimentos__1N1Y5',
-        (results) => (
-            results.map((el) => {
-                const title = el.querySelector('a')?.innerText;
-                if (!title) return null; 
+    // await page.goto(`https://www.exito.com/s?q=${item}`); 
+    // const exito_products = await page.$$eval(
+    //     '.product-card-no-alimentos_fsProductCardNoAlimentos__1N1Y5',
+    //     (results) => (
+    //         results.map((el) => {
+    //             const title = el.querySelector('a')?.innerText;
+    //             if (!title) return null; 
 
-                const image = el.querySelector('.imagen_plp')?.getAttribute('src');
-                const price = el.querySelector('.ProductPrice_container__price__LS1Td')?.innerText;
-                const url = el.querySelector('.jsx-3573353038.pod.pod-linklink_fs-link__6oAwa').getAttribute('href');
+    //             const image = el.querySelector('.imagen_plp')?.getAttribute('src');
+    //             const price = el.querySelector('.ProductPrice_container__price__LS1Td')?.innerText;
+    //             const url = el.querySelector('.jsx-3573353038.pod.pod-linklink_fs-link__6oAwa').getAttribute('href');
 
-                const rango = results.length;
-                const contador = Math.random(10);
+    //             const rango = results.length;
+    //             const contador = Math.random(10);
 
-                let new_products = {
-                    titulo: title,
-                    precio: price,
-                    imagen: image,
-                    url: url,
-                    ID: contador + rango,
-                    Page: "Exito"
-                };
+    //             let new_products = {
+    //                 titulo: title,
+    //                 precio: price,
+    //                 imagen: image,
+    //                 url: url,
+    //                 ID: contador + rango,
+    //                 Page: "Exito"
+    //             };
 
-                return new_products;
-            })
-        )
-    );
+    //             return new_products;
+    //         })
+    //     )
+    // );
 
     // Cerrar el navegador
     
     // Enviar ambos resultados juntos como un objeto
     await browser.close();
-    res.send({ mercadoLibre: products, Exito: exito_products });
+    res.send({ mercadoLibre: products});
 };
 
 app.post('/scraping',async (req, res)=>{
